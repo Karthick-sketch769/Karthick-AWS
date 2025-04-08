@@ -1,0 +1,22 @@
+#!/bin/bash
+#for any application do this
+sudo nano /etc/ssh/sshd_config
+PermitRootLogin no
+PubkeyAuthentication yes
+PasswordAuthentication no
+sudo systemctl restart ssh
+sudo sshd -t
+cd /root/.ssh/keep ur pub and provate keys
+cd /home/ubuntu/.ssh/authgorizedkey #put ur public jey
+chmod 700 ~/.ssh && chmod 600 ~/.ssh/authorized_keys #give this rights
+#if u pulling code from local or ftp do this but for git clone no need to the server
+#You can upload files via FTP, SFTP, or by using SSH. If you're using SSH, you can use rsync or scp:
+rsync -avz /local/searchappnew.zip/ ubuntu@ubuntu:/var/www/html/
+#the ssh config u need to do /root/.ssh path
+#copy our kepair and paste in.pub
+#now sync our key with code
+rsync -avz -e ssh -i ~/.ssh/searchlocal-app /local/searchappnew.zip ubuntu@54.211.8.8:/var/www/html/
+#test the access
+ssh -i ~/.ssh/my_key ubuntu@54.211.8.8
+#now run again
+rsync -avz -e "ssh -i ~/.ssh/searchlocal-app" /local/searchappnew.zip ubuntu@54.211.8.8:/var/www/html/
